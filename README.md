@@ -10,4 +10,14 @@ This project implements a creative pipeline using Openfabric SDK and DeepSeek LL
 6. Pull DeepSeek LLM: `ollama pull deepseek-r1:14b`
 
 ## Usage
-(To be updated with usage instructions)
+1. Activate the virtual environment: `venv\Scripts\activate`
+2. Run the application: `python main.py`
+3. Input a prompt like "A futuristic robot with LED lights" or reference past creations like "A new robot like the one I created last Thursday but with wings"
+4. Check the `outputs` directory for generated images and 3D models
+5. View past creations in memory.db using SQLite tools or `LongTermMemory.get_all_creations()`
+
+## Testing
+1. Tested on Windows with Python 3.8+
+2. Verified DeepSeek LLM responses using ollama chat
+3. Tested pipeline with prompts: "A futuristic robot", "A dragon like last week's but blue"
+4. Confirmed memory storage and retrieval using memory.py test cases
