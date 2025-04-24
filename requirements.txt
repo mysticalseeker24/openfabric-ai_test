@@ -2,4 +2,10 @@ openfabric-pysdk
 ollama
 python-dateutil
 requests
+marshmallow
+streamlit
+pillow
+chromadb
+pydantic
+uuid
 
