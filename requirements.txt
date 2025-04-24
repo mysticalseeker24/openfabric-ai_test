@@ -1,3 +1,5 @@
 openfabric-pysdk
 ollama
 python-dateutil
+requests
+
