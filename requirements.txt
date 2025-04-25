@@ -1,11 +1,15 @@
-openfabric-pysdk
-ollama
+# Core dependencies
+openfabric-pysdk==0.2.9
+# Don't specify gevent version - let openfabric-pysdk handle it
 python-dateutil
 requests
 marshmallow
-streamlit
 pillow
-chromadb
 pydantic
+
+# Optional dependencies (comment these out if having installation issues)
+ollama  # Optional: for LLM integration
+streamlit  # Optional: for GUI frontend
+chromadb  # Optional: for advanced memory system
 uuid
 

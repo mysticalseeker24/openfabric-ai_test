@@ -25,9 +25,19 @@ This project implements an end-to-end creative AI pipeline using Openfabric SDK,
    venv\Scripts\activate  # On Windows
    source venv/bin/activate  # On Linux/Mac
    ```
-4. Install dependencies: `pip install -r requirements.txt`
+4. Install dependencies using the custom installation script:
+   ```
+   python install_dependencies.py
+   ```
+   This script handles various dependency conflicts that can occur, especially on Windows.
+   
+   Alternatively, you can use pip: `pip install -r requirements.txt`
 5. Install Ollama from https://ollama.com/download and run it
 6. Pull DeepSeek LLM: `ollama pull deepseek-r1:14b`
+7. Check if all dependencies were successfully installed:
+   ```
+   python main.py --check
+   ```
 
 ## Usage
 
@@ -79,9 +89,33 @@ This will launch a web interface where you can:
 
 ## Testing
 
-1. Basic pipeline test: `python main.py`
-2. GUI test: `streamlit run app.py`
-3. Unit tests: `python -m unittest tests/test_pipeline.py`
+A basic test suite is included to verify core functionality:
+
+```bash
+python -m unittest tests/test_pipeline.py
+```
+
+## Troubleshooting
+
+### Known Issues and Solutions
+
+1. **Gevent Installation Issues on Windows**
+   - **Problem**: When installing openfabric-pysdk, gevent fails to compile with Cython errors about missing `long` type in Python 3
+   - **Solution**: We've created a custom installation script (`install_dependencies.py`) that bypasses the problematic compilation by installing openfabric-pysdk without dependencies, then manually installing the required dependencies individually.
+   - **Alternative**: Modify the METADATA file in the openfabric-pysdk package to remove the upper version constraint for gevent.
+
+2. **Pydantic Version Conflicts**
+   - **Problem**: Ollama requires pydantic v2+ (for `pydantic.json_schema`), while openfabric-pysdk requires pydantic v1 (< 2.0.0)
+   - **Solution**: Use pydantic v2 and modify any code that depends on pydantic v1 specific APIs. We've made our code compatible with both versions.
+
+3. **Missing ChromaDB or LLM Dependencies**
+   - **Problem**: These optional dependencies may fail to install on some systems
+   - **Solution**: The pipeline is designed to degrade gracefully, falling back to simpler memory systems or basic prompt handling when advanced features aren't available.
+
+4. **Dependency Check**
+   - We've implemented a comprehensive dependency checker (`dependency_check.py`) that runs diagnostically to identify which components are available and what features will work. Run it with `python main.py --check`.
+
+If you encounter issues not listed here, check the logs in the `logs/` directory for more information.
 
 ## Requirements
 
